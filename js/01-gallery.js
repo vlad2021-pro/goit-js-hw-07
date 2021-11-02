@@ -3,8 +3,7 @@ import { galleryItems } from './gallery-items.js';
 const gallaryNode = document.querySelector('.gallery');
 
 const newGallery = galleryItems.map(element => { 
-   return 
-    `<div class="gallery__item">
+ return `<div class="gallery__item">
   <a class="gallery__link" href="${element.original}">
     <img
       class="gallery__image"
@@ -20,9 +19,3 @@ const newGallery = galleryItems.map(element => {
 
 gallaryNode.insertAdjacentHTML('beforeend', newGallery )
 
-
-
-
-
-
-console.log(galleryItems);
