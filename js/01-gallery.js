@@ -19,3 +19,24 @@ const newGallery = galleryItems.map(element => {
 
 gallaryNode.insertAdjacentHTML('beforeend', newGallery )
 
+
+
+const openLargePictures = (event) => {
+  event.preventDefault();
+
+  const largePictures = event.target.dataset.source;
+  const modalWindow = basicLightbox.create(`<img width="1400" height="900" src="${largePictures}">`);
+  modalWindow.show();
+  
+  document.addEventListener("keydown", event => {
+    if (event.key === 'Escape') {
+      modalWindow.close();
+      document.removeEventListener("keydown", openLargePictures);
+    }
+  })
+}
+
+gallaryNode.addEventListener('click', openLargePictures);
+
+
+
