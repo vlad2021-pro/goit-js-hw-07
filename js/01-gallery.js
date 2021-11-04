@@ -15,28 +15,44 @@ const newGallery = galleryItems.map(element => {
 </div>`;
 
 })
-    .join('');
+  .join('');
 
-gallaryNode.insertAdjacentHTML('beforeend', newGallery )
-
-
-
-const openLargePictures = (event) => {
-  event.preventDefault();
-
-  const largePictures = event.target.dataset.source;
-  const modalWindow = basicLightbox.create(`<img width="1400" height="900" src="${largePictures}">`);
-  modalWindow.show();
+gallaryNode.insertAdjacentHTML('beforeend', newGallery)
   
-  document.addEventListener("keydown", event => {
-    if (event.key === 'Escape') {
-      modalWindow.close();
-      document.removeEventListener("keydown", openLargePictures);
+document.querySelectorAll('.gallery__image').forEach(img => {
+  img.onclick = onImgClick
+  
+});
+
+const instance = basicLightbox.create(
+  `<img class="modal-img" src="">`,
+  {
+    onShow: instance => {
+      window.addEventListener('keydown', onEscClick);
+    },
+  },
+  {
+    onClose: instance => {
+      window.removeEventListener('keydown', onEscClick);
+    },
+  },
+);
+function onImgClick(evt) {
+  evt.preventDefault();
+  
+    if (evt.target.nodeName !== 'IMG') {
+      return;
+
     }
-  })
+    instance.element().querySelector('.modal-img').src =
+      evt.target.dataset.source;
+    instance.show();
 }
-
-gallaryNode.addEventListener('click', openLargePictures);
-
-
+   
+  function onEscClick(evt) {
+    if (evt.key === 'Escape') {
+      instance.close();
+      return;
+    }
+  }
 
